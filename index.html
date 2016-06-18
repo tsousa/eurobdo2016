@@ -1,0 +1,417 @@
+﻿<!doctype html>  
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Euro BdP 2016</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+     
+    <!-- !CSS -->
+    <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"/>
+    
+    <!-- TODO: obter localmente estes ficheiros -->
+    <script src="js/jquery-1.12.3.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/linq.js"></script>
+    <script>
+
+        // CONFIG
+
+        var jogadores = {};
+        jogadores.RicardoAlves = "Ricardo Alves";
+
+
+        var PONTOS_POR_MEIOFINALISTA_ACERTADO = 4;
+        var PONTOS_ACERTAR_CAMPEAO = 15;
+        var PONTOS_JOGOS_GRUPO = 1;
+        var PONTOS_JOGOS_OITAVOS = 2;
+        var PONTOS_JOGOS_QUARTOS = 3;
+        var PONTOS_JOGOS_MEIAS = 4;
+        var PONTOS_JOGOS_FINAL = 5;
+
+        function ValorJogos() {
+            var pontosPorJogo = {};
+
+            Enumerable
+                .Range(1, 36)
+                .ForEach(function (el) {
+                    pontosPorJogo[el] = PONTOS_JOGOS_GRUPO;
+                });
+
+            Enumerable
+                .Range(37, 44)
+                .ForEach(function (el) {
+                    pontosPorJogo[el] = PONTOS_JOGOS_OITAVOS;
+                });
+
+            Enumerable
+                .Range(45, 48)
+                .ForEach(function (el) {
+                    pontosPorJogo[el] = PONTOS_JOGOS_QUARTOS;
+                });
+
+            Enumerable
+                .Range(49, 50)
+                .ForEach(function (el) {
+                    pontosPorJogo[el] = PONTOS_JOGOS_MEIAS;
+                });
+
+            pontosPorJogo[51] = PONTOS_JOGOS_FINAL;
+
+            return pontosPorJogo;
+
+        }
+
+        // INPUT 
+
+        function ApostasEquipas() {
+
+            // TODO: completar isto
+            return [
+                { "Apostador":  jogadores.RicardoAlves, "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "André Ferreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Carlos Rodrigues", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Luís Santos", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Abílio Abreu", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "João Martins", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "José Godinho", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Carlos Martins", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Pedro Carvalho", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Antonio Pena", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "João Gonzalez", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Ricardo Pereira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Pedro Ambrósio", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "António Parreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "António Ferreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Jorge Costa", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Ricardo Vilarinho", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Tiago Sousa", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Ricardo Sá", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Patrício Timoteo", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Sergio Pires", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Gui Figueiredo", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Tiago Santos", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Nuno Bergano", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Luís Cunha", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Rogério Leiria", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Rafael Ferreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
+                { "Apostador": "Guilherme Sousa", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" }
+            ];
+        }
+
+        function ApostaCarago(arrApostas, apostador, apostasDoJogador) {
+            for (var jogoIdx = 0; jogoIdx < apostasDoJogador.length; jogoIdx++) {
+                arrApostas.push({ "Apostador": apostador, "JogoId": jogoIdx, "Resultado": apostasDoJogador[jogoIdx] });
+            }
+        }
+
+        function ApostasJogos() {
+
+            // 27 Jogadores x 51 Jogos = dasse
+            var apostas = [];
+            var apostador =  jogadores.RicardoAlves; var apostasDoJogador = [1, 2, 1, 1, 2, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2, 0, 2, 0, 2, 0, 1, 2, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "André Ferreira"; apostasDoJogador = [1, 0, 1, 0, 2, 1, 1, 0, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 2, 0, 2, 0, 2, 0, 0, 2, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Carlos Rodrigues"; apostasDoJogador = [1, 2, 1, 2, 2, 0, 1, 2, 2, 1, 0, 1, 1, 2, 1, 2, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 2, 1, 2, 1, 2, 1, 1, 2, 2, 0, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Luís Santos"; apostasDoJogador = [1, 2, 0, 1, 0, 1, 1, 1, 2, 1, 0, 1, 1, 2, 1, 1, 1, 1, 1, 0, 2, 1, 1, 0, 1, 1, 2, 0, 1, 0, 2, 0, 2, 1, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Abílio Abreu"; apostasDoJogador = [1, 2, 2, 1, 2, 1, 1, 1, 0, 2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 0, 2, 0, 2, 2, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "João Martins"; apostasDoJogador = [1, 0, 2, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 2, 1, 2, 1, 2, 1, 2, 2, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "José Godinho"; apostasDoJogador = [1, 2, 1, 1, 0, 0, 1, 1, 2, 0, 1, 1, 1, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 2, 1, 1, 0, 0, 2, 2, 2, 0, 2, 0, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Carlos Martins"; apostasDoJogador = [1, 0, 1, 0, 1, 0, 1, 1, 2, 0, 0, 1, 1, 2, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 2, 1, 0, 0, 2, 1, 0, 1, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Pedro Carvalho"; apostasDoJogador = [1, 2, 0, 1, 0, 1, 1, 1, 2, 0, 2, 1, 1, 2, 1, 1, 0, 1, 0, 0, 0, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 0, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Antonio Pena"; apostasDoJogador = [1, 2, 2, 2, 2, 0, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 2, 1, 2, 1, 2, 1, 2, 0, 2, 1, 1];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "João Gonzalez"; apostasDoJogador = [1, 0, 2, 0, 1, 1, 1, 0, 1, 1, 2, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0, 2, 1, 2, 1, 2, 0, 2, 1, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Ricardo Pereira"; apostasDoJogador = [1, 0, 1, 1, 1, 2, 1, 1, 2, 2, 0, 1, 1, 0, 1, 1, 2, 1, 2, 1, 0, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 0, 2, 0, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Pedro Ambrósio"; apostasDoJogador = [1, 2, 0, 1, 2, 0, 1, 1, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0, 0, 2, 0, 2, 1, 0, 2, 2, 1, 1];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "António Parreira"; apostasDoJogador = [1, 2, 2, 1, 0, 1, 1, 2, 2, 0, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 0, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 2, 1, 0, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Jorge Costa"; apostasDoJogador = [1, 2, 0, 0, 2, 1, 1, 1, 2, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 2, 1, 2, 0, 2, 0, 2, 2, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Ricardo Vilarinho"; apostasDoJogador = [1, 2, 0, 1, 2, 1, 1, 1, 0, 2, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            //                                             1, 2, 1, 0, 2, 1, 1, 1, 0, 2, 2, 0, 2, 0, 1, 1, 2, 0, 1, 0, 1, 1, 0
+            apostador = "Tiago Sousa"; apostasDoJogador = [1, 2, 0, 1, 2, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Ricardo Sá"; apostasDoJogador = [1, 2, 2, 1, 2, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 1];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Patrício Timoteo"; apostasDoJogador = [1, 2, 2, 2, 2, 0, 1, 1, 2, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 2, 1, 2, 1, 2, 1, 2, 0, 2, 1, 1];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Sergio Pires"; apostasDoJogador = [1, 2, 0, 1, 2, 1, 1, 1, 2, 1, 0, 1, 2, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 0, 0, 2, 1, 2, 1, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Gui Figueiredo"; apostasDoJogador = [1, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 0, 2, 0, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Tiago Santos"; apostasDoJogador = [1, 2, 0, 1, 0, 1, 1, 1, 2, 1, 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 1, 0, 2, 1, 2, 1, 2, 0, 2, 2, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Nuno Bergano"; apostasDoJogador = [1, 2, 0, 0, 2, 1, 1, 0, 2, 0, 2, 1, 1, 2, 1, 1, 1, 1, 1, 0, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Luís Cunha"; apostasDoJogador = [1, 2, 2, 0, 2, 0, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 0, 1, 0, 1, 2, 1, 1, 1, 1, 0, 0, 1, 2, 1, 2, 1, 0, 0, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Rogério Leiria"; apostasDoJogador = [1, 2, 2, 1, 2, 1, 1, 1, 2, 0, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 2, 0, 2, 1, 2, 0, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Rafael Ferreira"; apostasDoJogador = [1, 2, 0, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 1, 2, 0, 2, 1, 2];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+            apostador = "Guilherme Sousa"; apostasDoJogador = [1, 2, 0, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 0, 1, 1, 2, 1, 2, 0, 2, 0, 2, 0, 2, 1, 0];
+            ApostaCarago(apostas, apostador, apostasDoJogador);
+
+            console.log("apostas",apostas);
+
+            return apostas;
+        }
+       
+
+        // LOGICA
+
+        // 0: Empate, 1: Ganhou equipa 1, 2: Ganhou equipa 2
+        function ParseResultadoJogo(fixtureResult)
+        {
+            // Se houver penaltis, rezar para que fiquem indicados no resultado como nos outros jogos
+
+            if (fixtureResult.goalsHomeTeam === fixtureResult.goalsAwayTeam)
+                return 0;
+
+            if (fixtureResult.goalsHomeTeam > fixtureResult.goalsAwayTeam)
+                return 1;
+
+            return 2;
+        }
+
+        function ObterResultadosOficiaisJogos(then) {
+
+            jQuery.ajax({
+                headers: { 'X-Auth-Token': '89cb3732cf0446629702236d435408ed' },
+                dataType: 'json',
+                type: 'GET',
+                url: "http://api.football-data.org/v1/soccerseasons/424/fixtures",
+                success: function (response) {
+                    console.log(response);
+                    var jogosOficiais = Enumerable
+                        .From(response.fixtures)
+                        .Select(function(fixture,i) {
+                            var r = {
+                                "JogoId": i+1,
+                                "Resultado": fixture.status !== 'FINISHED' ? -1 : ParseResultadoJogo(fixture.result),
+                                "Equipa1": fixture.homeTeamName,
+                                "Equipa2": fixture.awayTeamName,
+                                "JaDecorreu" : fixture.status === 'FINISHED'
+                            };
+                            return r;
+                        })
+                        .ToArray();
+
+                    console.log("jogosOficiais",jogosOficiais);
+
+                    then(jogosOficiais);
+                }
+            });
+        }
+        
+        function CalculaAcertosJogos(jogosOficiais, apostasJogos) {
+            var resultadoBoolDasApostas = [];
+
+            jogosOficiais.forEach(function (jogoOficial)
+            {
+                apostasJogos.forEach(function (aposta)
+                {
+                    if (jogoOficial.JogoId === aposta.JogoId && jogoOficial.JaDecorreu)
+                    {
+                        resultadoBoolDasApostas.push({
+                            "Apostador": aposta.Apostador,
+                            "JogoId": jogoOficial.JogoId,
+                            "Acertou": jogoOficial.Resultado === aposta.Resultado
+                        });
+                    }
+                });
+            });
+
+            return resultadoBoolDasApostas;
+        }
+
+        function CalcPontuacao(prognosticos, valorJogos)
+        {
+            var pontuacaoJogos = Enumerable
+                .From(prognosticos)
+                .Where("$.Acertou")
+                .Select(function (res) {
+                    var r = {
+                        "Apostador": res.Apostador,
+                        "PontosDoJogo": valorJogos[res.JogoId]
+                    };
+                    return r;
+                })
+                .GroupBy(
+                    "$.Apostador",
+                    null,
+                    function(key, g) {
+                        var r =
+                        {
+                            Apostador: key,
+                            PontuaçãoPrognosticos: g.Sum("$.PontosDoJogo")
+                        };
+                        return r;
+                    }
+                )
+                .ToArray();
+
+
+            return pontuacaoJogos;
+        }
+
+        function CalculaResultadoApostadoresEmJogos(resultadosOficiaisJogos, apostasJogos, valorJogos)
+        {
+            var acertosJogos = CalculaAcertosJogos(resultadosOficiaisJogos, apostasJogos);
+            return CalcPontuacao(acertosJogos, valorJogos);
+        }
+
+        function ParseVencedor(jogo)
+        {
+            if (jogo.Resultado === 1)
+                return jogo.Equipa1;
+            if (jogo.Resultado === 2)
+                return jogo.Equipa2;
+
+            alert("Erro ao fazer parse do Vencedor da equipa");
+            
+        }
+
+        function CalculaResultadoApostadoresEmEquipas(resultadosOficiaisJogos, apostasEquipas) {
+            var meiosFinalistasOficiais = Enumerable
+                .From(resultadosOficiaisJogos)
+                // Isto assume que vão ser realmente 48 jogos. Se a Rússia é desqualificada.. 
+                .Skip(48) // salta até às meias 
+                .Take(2) // 2 jogos das meias
+                .Select(function(jogo) {
+                    return [jogo.Equipa1, jogo.Equipa2];
+                })
+                .SelectMany(function(a) { return a })
+                .ToArray();
+
+            console.log("meiosFinalistasOficiais",meiosFinalistasOficiais);
+
+            var campeao = Enumerable
+                .From(resultadosOficiaisJogos)
+                .Skip(50)
+                .Select(function(jogoFinal) {
+                    return ParseVencedor(jogoFinal);
+                })
+                .SingleOrDefault("");
+
+            console.log("campeao", campeao);
+
+            var resultadosFinaisBoolENumerico = Enumerable
+                .From(apostasEquipas)
+                .Select(function (apostaEquipas)
+                {
+                    var meioFinalistasAcertados = Enumerable.From(meiosFinalistasOficiais).Intersect(apostaEquipas.SemiFinalistas).Count();
+                    return {
+                        "Apostador": apostaEquipas.Apostador,
+                        "NumMeioFinalistasAcertados": meioFinalistasAcertados,
+                        "AcertouFinalista": apostaEquipas.Campeao === campeao
+                    };
+                })
+                .ToArray();
+
+            var resultadosFinais = Enumerable
+                .From(resultadosFinaisBoolENumerico)
+                .Select(function (resultadoApostaEquipa)
+                {
+                    return {
+                        "Apostador": resultadoApostaEquipa.Apostador,
+                        "Pontos": (resultadoApostaEquipa.NumMeioFinalistasAcertados * PONTOS_POR_MEIOFINALISTA_ACERTADO) + (resultadoApostaEquipa.AcertouFinalista ? PONTOS_ACERTAR_CAMPEAO : 0)
+                    };
+                })
+                .ToArray();
+
+            console.log(resultadosFinais);
+
+            return resultadosFinais;
+        }
+
+        $(document).ready(function () {
+
+            ObterResultadosOficiaisJogos(
+                function (resultadosOficiaisJogos)
+                {
+                    var resultadoApostadoresJogos = CalculaResultadoApostadoresEmJogos(resultadosOficiaisJogos, ApostasJogos(), ValorJogos());
+                    var resultadoApostadoresEquipas = CalculaResultadoApostadoresEmEquipas(resultadosOficiaisJogos, ApostasEquipas());
+
+                    var pontuacaoMerged = [];
+                    for (var i = 0; i < resultadoApostadoresJogos.length; i++) {
+
+                        var x = resultadoApostadoresJogos[i];
+
+                        for (var j = 0; j < resultadoApostadoresEquipas.length; j++)
+                        {
+                            var y = resultadoApostadoresEquipas[j];
+
+                            if (x.Apostador === y.Apostador)
+                            {
+                                pontuacaoMerged.push({
+                                    "Apostador" : x.Apostador,
+                                    "PontuaçãoPrognosticos": x.PontuaçãoPrognosticos,
+                                    "PontuaçãoEquipas": y.Pontos,
+                                    "PontuaçãoTotal": y.Pontos + x.PontuaçãoPrognosticos
+                                });
+                            }
+                        }
+                    }
+
+                    $('#example').DataTable({
+                        data: pontuacaoMerged,
+                        columns: [
+                                { title: "Apostador", data: "Apostador" },
+                                { title: "Pontos por prognósticos acertados", data: "PontuaçãoPrognosticos" },
+                                { title: "Pontos por equipas acertadas", data: "PontuaçãoEquipas" },
+                                { title: "Total", data: "PontuaçãoTotal" }
+                        ],
+                        // ordenado já pelos critérios de desempate
+                        order: [
+                            [3, "desc"],
+                            [1, "desc"],
+                            [0, "asc"]],
+                        paging: false
+                    });
+
+                    // Estatisticas
+                    $("#JogosObtidos").text(Enumerable.From(resultadosOficiaisJogos).Count());
+                    $("#JogosTerminados").text(Enumerable.From(resultadosOficiaisJogos).Where("$.JaDecorreu").Count());
+                    $("#Resultados").text(Enumerable.From(resultadosOficiaisJogos).Select(function(x) { return " " + x.Equipa1 + " VS " + x.Equipa2+" = "+  x.Resultado }).ToArray());
+
+
+                }
+            ); 
+            
+        });
+
+    </script>
+ 
+</head>
+ 
+<body>
+<div id="container">
+
+    <div>Jogos obtidos: <span id="JogosObtidos"></span></div>
+    <div>Jogos terminados: <span id="JogosTerminados"></span></div>
+    <div>Resultados: <span id="Resultados"></span></div>
+    <div>Legenda: -1: Não decorrido; 0: Empate; 1: Vitória equipa1; 2: Vitória equipa2; </div>
+    <table id="example" class="display" width="100%"></table>
+
+</div>
+</body>
+ 
+</html>

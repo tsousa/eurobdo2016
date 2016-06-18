@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C2A71E50-A33E-4C5E-B39C-DA7969DEA25B}"
+	ProjectSection(SolutionItems) = preProject
+		index.html = index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{4EE279C8-3DA7-4E73-8867-E21BE2BC68D9}"
+	ProjectSection(SolutionItems) = preProject
+		js\jquery-1.12.3.js = js\jquery-1.12.3.js
+		js\linq.js = js\linq.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{E085B155-54E7-42A7-B2EC-A0285C080843}"
+	ProjectSection(SolutionItems) = preProject
+		css\jquery.dataTables.min.css = css\jquery.dataTables.min.css
+		css\reset.css = css\reset.css
+		css\style.css = css\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{B6E6D948-B518-4327-BBCA-403C44472FA6}"
+	ProjectSection(SolutionItems) = preProject
+		images\sort_asc.png = images\sort_asc.png
+		images\sort_asc_disabled.png = images\sort_asc_disabled.png
+		images\sort_both.png = images\sort_both.png
+		images\sort_desc.png = images\sort_desc.png
+		images\sort_desc_disabled.png = images\sort_desc_disabled.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EE279C8-3DA7-4E73-8867-E21BE2BC68D9} = {C2A71E50-A33E-4C5E-B39C-DA7969DEA25B}
+		{E085B155-54E7-42A7-B2EC-A0285C080843} = {C2A71E50-A33E-4C5E-B39C-DA7969DEA25B}
+		{B6E6D948-B518-4327-BBCA-403C44472FA6} = {C2A71E50-A33E-4C5E-B39C-DA7969DEA25B}
+	EndGlobalSection
+EndGlobal
