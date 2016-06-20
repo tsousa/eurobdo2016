@@ -21,8 +21,8 @@
 
         // CONFIG
 
-        var jogadores = {};
-        jogadores.RicardoAlves = "Ricardo Alves";
+        var Jogador = {};
+        Jogador.RicardoAlves = "Ricardo Alves";
 
 
         var PONTOS_POR_MEIOFINALISTA_ACERTADO = 4;
@@ -66,54 +66,80 @@
 
         }
 
+        // TODO: Isto tem que bater certo com o que vem do oficial
+        var Pais = {
+            Croatia: "Croatia", 
+            Portugal: "Portugal", 
+            Germany: "Germany", 
+            France: "France", 
+            Spain: "Spain", 
+            Belgium: "Belgium", 
+            Italy: "Italy",
+            England: "England"
+        };
+
         // INPUT 
 
         function ApostasEquipas() {
-
-            // TODO: completar isto
+        
+            // 27 Jogadores
+            // IMPROVE: devia ter criar um input com todas as apostas (jogo e equipa) por apostador (até podia ser este, com mais um  campo Apostas
+            // IMPROVE: nomes de apostadores estarem em constantes
             return [
-                { "Apostador":  jogadores.RicardoAlves, "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "André Ferreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Carlos Rodrigues", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Luís Santos", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Abílio Abreu", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "João Martins", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "José Godinho", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Carlos Martins", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Pedro Carvalho", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Antonio Pena", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "João Gonzalez", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Ricardo Pereira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Pedro Ambrósio", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "António Parreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "António Ferreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Jorge Costa", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Ricardo Vilarinho", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Tiago Sousa", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Ricardo Sá", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Patrício Timoteo", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Sergio Pires", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Gui Figueiredo", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Tiago Santos", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Nuno Bergano", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Luís Cunha", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Rogério Leiria", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Rafael Ferreira", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" },
-                { "Apostador": "Guilherme Sousa", "SemiFinalistas": ["Equipa1", "Equipa2", "Equipa3", "Equipa4"], "Campeao": "Equipa1234" }
+                { "Apostador": Jogador.RicardoAlves, "SemiFinalistas": [Pais.Croatia, Pais.Portugal, Pais.Germany, Pais.France], "Campeao": Pais.France  },
+                { "Apostador": "André Ferreira", "SemiFinalistas": [Pais.France, Pais.Germany, Pais.Belgium, Pais.Spain], "Campeao": Pais.Germany },
+                { "Apostador": "Carlos Rodrigues", "SemiFinalistas": [Pais.Portugal, Pais.Germany, Pais.Belgium, Pais.France], "Campeao": Pais.Portugal },
+                { "Apostador": "Luís Santos", "SemiFinalistas": [Pais.Portugal, Pais.Belgium, Pais.Italy, Pais.France], "Campeao": Pais.Portugal },
+                { "Apostador": "Abílio Abreu", "SemiFinalistas": [Pais.France, Pais.Portugal, Pais.Spain, Pais.Italy], "Campeao":   Pais.Germany},
+                { "Apostador": "João Martins", "SemiFinalistas": [Pais.Portugal, Pais.Spain, Pais.France, Pais.Germany], "Campeao": Pais.Portugal },
+                { "Apostador": "José Godinho", "SemiFinalistas": [Pais.Portugal, Pais.France, Pais.Germany, Pais.Belgium], "Campeao": Pais.Portugal },
+                { "Apostador": "Carlos Martins", "SemiFinalistas": [Pais.Spain, Pais.France, Pais.Germany, Pais.Portugal], "Campeao":  Pais.France },
+                { "Apostador": "Pedro Carvalho", "SemiFinalistas": [Pais.Germany, Pais.France, Pais.Portugal, Pais.Spain], "Campeao":  Pais.France },
+                { "Apostador": "Antonio Pena", "SemiFinalistas": [Pais.Portugal, Pais.France, Pais.Germany, Pais.Spain], "Campeao": Pais.Portugal },
+                { "Apostador": "João Gonzalez", "SemiFinalistas": [Pais.France, Pais.Belgium, Pais.Portugal, Pais.Germany], "Campeao": Pais.Germany },
+                { "Apostador": "Ricardo Pereira", "SemiFinalistas": [Pais.Germany, Pais.Spain, Pais.France, Pais.England], "Campeao": Pais.France },
+                { "Apostador": "Pedro Ambrósio", "SemiFinalistas": [Pais.France, Pais.Germany, Pais.Spain, Pais.Portugal], "Campeao": Pais.Portugal },
+                { "Apostador": "António Parreira", "SemiFinalistas": [Pais.Germany, Pais.France, Pais.Portugal, Pais.Spain], "Campeao":  Pais.Portugal},
+                { "Apostador": "Jorge Costa", "SemiFinalistas": [Pais.Germany, Pais.Portugal, Pais.France, Pais.Spain], "Campeao": Pais.Germany },
+                { "Apostador": "Ricardo Vilarinho", "SemiFinalistas": [Pais.Portugal, Pais.France, Pais.Germany, Pais.Spain], "Campeao": Pais.Germany },
+                { "Apostador": "Tiago Sousa", "SemiFinalistas": [Pais.Portugal, Pais.Germany, Pais.France, Pais.Spain], "Campeao": Pais.Portugal },
+                { "Apostador": "Ricardo Sá", "SemiFinalistas": [Pais.France, Pais.Spain, Pais.Germany, Pais.England], "Campeao": Pais.Germany },
+                { "Apostador": "Patrício Timoteo", "SemiFinalistas": [Pais.Germany, Pais.France, Pais.Portugal, Pais.Italy], "Campeao": Pais.Portugal },
+                { "Apostador": "Sergio Pires", "SemiFinalistas": [Pais.Germany, Pais.Spain, Pais.France, Pais.Italy], "Campeao": Pais.Spain },
+                { "Apostador": "Gui Figueiredo", "SemiFinalistas": [Pais.Germany, Pais.France, Pais.Portugal, Pais.Croatia], "Campeao":  Pais.France },
+                { "Apostador": "Tiago Santos", "SemiFinalistas": [Pais.Spain, Pais.France, Pais.Germany, Pais.Portugal], "Campeao": Pais.Germany },
+                { "Apostador": "Nuno Bergano", "SemiFinalistas": [Pais.Spain, Pais.Germany, Pais.Portugal, Pais.France], "Campeao": Pais.Portugal },
+                { "Apostador": "Luís Cunha", "SemiFinalistas": [Pais.Germany, Pais.Spain, Pais.Italy, Pais.France], "Campeao":  Pais.France },
+                { "Apostador": "Rogério Leiria", "SemiFinalistas": [Pais.Portugal, Pais.Spain, Pais.France, Pais.Germany], "Campeao": Pais.Germany },
+                { "Apostador": "Rafael Ferreira", "SemiFinalistas": [Pais.Spain, Pais.England, Pais.Germany, Pais.France], "Campeao":  Pais.France },
+                { "Apostador": "Guilherme Sousa", "SemiFinalistas": [Pais.France, Pais.Germany, Pais.Portugal, Pais.England], "Campeao": Pais.Germany }
             ];
         }
 
         function ApostaCarago(arrApostas, apostador, apostasDoJogador) {
-            for (var jogoIdx = 0; jogoIdx < apostasDoJogador.length; jogoIdx++) {
-                arrApostas.push({ "Apostador": apostador, "JogoId": jogoIdx, "Resultado": apostasDoJogador[jogoIdx] });
+            for (var i = 0; i < apostasDoJogador.length; i++) {
+                // os ids do jogos começam no 1 (também está nos resultados oficiais)
+                arrApostas.push({ "Apostador": apostador, "JogoId": i + 1, "Resultado": apostasDoJogador[i] });
             }
         }
 
+        // IMPROVE: simbolo 0, 1, 2 estarem em constantes Resultado.Empate, Resultado.VitoriaEquipa1, Resultado.Equipa2 respetivamente
+
+
         function ApostasJogos() {
 
-            // 27 Jogadores x 51 Jogos = dasse
+            // 27 Jogadores x 51 Jogos = dasse (ainda só estão 36 jogos)
+
+            // IMPROVE: se fizesse uso da estrutura que está em ApostasEquipa, bastaria iterrar aqui
+            // foreach AggAposta
+            //    ApostaCarago(apostas, AggAposta.Apostador, AggAposta.ApostosJogos);
+
+            // lição: estrutura do Input é importante, deve ser o + desambigua possível
+
+
+
             var apostas = [];
-            var apostador =  jogadores.RicardoAlves; var apostasDoJogador = [1, 2, 1, 1, 2, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2, 0, 2, 0, 2, 0, 1, 2, 2, 1, 0];
+            var apostador =  Jogador.RicardoAlves; var apostasDoJogador = [1, 2, 1, 1, 2, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2, 0, 2, 0, 2, 0, 1, 2, 2, 1, 0];
             ApostaCarago(apostas, apostador, apostasDoJogador);
             apostador = "André Ferreira"; apostasDoJogador = [1, 0, 1, 0, 2, 1, 1, 0, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 2, 0, 2, 0, 2, 0, 0, 2, 2, 1, 2];
             ApostaCarago(apostas, apostador, apostasDoJogador);
@@ -145,7 +171,6 @@
             ApostaCarago(apostas, apostador, apostasDoJogador);
             apostador = "Ricardo Vilarinho"; apostasDoJogador = [1, 2, 0, 1, 2, 1, 1, 1, 0, 2, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2];
             ApostaCarago(apostas, apostador, apostasDoJogador);
-            //                                             1, 2, 1, 0, 2, 1, 1, 1, 0, 2, 2, 0, 2, 0, 1, 1, 2, 0, 1, 0, 1, 1, 0
             apostador = "Tiago Sousa"; apostasDoJogador = [1, 2, 0, 1, 2, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 1, 2];
             ApostaCarago(apostas, apostador, apostasDoJogador);
             apostador = "Ricardo Sá"; apostasDoJogador = [1, 2, 2, 1, 2, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 1];
@@ -347,6 +372,7 @@
             ObterResultadosOficiaisJogos(
                 function (resultadosOficiaisJogos)
                 {
+                    // IMPROVE: Criar Apostas() , dps que cada seguinte obtem o que precisar
                     var resultadoApostadoresJogos = CalculaResultadoApostadoresEmJogos(resultadosOficiaisJogos, ApostasJogos(), ValorJogos());
                     var resultadoApostadoresEquipas = CalculaResultadoApostadoresEmEquipas(resultadosOficiaisJogos, ApostasEquipas());
 
@@ -371,6 +397,8 @@
                         }
                     }
 
+                    // TODO: coluna Rank? Talvez não faça sentido
+
                     $('#example').DataTable({
                         data: pontuacaoMerged,
                         columns: [
@@ -390,9 +418,12 @@
                     // Estatisticas
                     $("#JogosObtidos").text(Enumerable.From(resultadosOficiaisJogos).Count());
                     $("#JogosTerminados").text(Enumerable.From(resultadosOficiaisJogos).Where("$.JaDecorreu").Count());
-                    $("#Resultados").text(Enumerable.From(resultadosOficiaisJogos).Select(function(x) { return " " + x.Equipa1 + " VS " + x.Equipa2+" = "+  x.Resultado }).ToArray());
+                    $("#Resultados").text();
 
-
+                    $.each(Enumerable.From(resultadosOficiaisJogos).Select(function (x) { return "<li>" + x.Equipa1 + " VS " + x.Equipa2 + " = " + x.Resultado + "</li>" }).ToArray()
+                        , function (key, val) {
+                            $(".linkList").append(val);
+                        });
                 }
             ); 
             
@@ -408,6 +439,9 @@
     <div>Jogos obtidos: <span id="JogosObtidos"></span></div>
     <div>Jogos terminados: <span id="JogosTerminados"></span></div>
     <div>Resultados: <span id="Resultados"></span></div>
+    <ul class="linkList">
+    </ul>
+
     <div>Legenda: -1: Não decorrido; 0: Empate; 1: Vitória equipa1; 2: Vitória equipa2; </div>
     <table id="example" class="display" width="100%"></table>
 
