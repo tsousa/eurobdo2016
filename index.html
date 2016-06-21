@@ -520,9 +520,9 @@
                     $("#JogosTerminados").text(Enumerable.From(resultadosOficiaisJogos).Where("$.JaDecorreu").Count());
                     $("#Resultados").text();
 
-                    $.each(Enumerable.From(resultadosOficiaisJogos).Select(function (x) { return "<li>" + x.Equipa1 + " VS " + x.Equipa2 + " = " + x.Resultado + "</li>" }).ToArray()
+                    $.each(Enumerable.From(resultadosOficiaisJogos).Select(function (x) { return "<li> #" + ("00" + x.JogoId).slice(-2) + " " + x.Equipa1 + " VS " + x.Equipa2 + " = " + x.Resultado + "</li>" }).ToArray()
                         , function (key, val) {
-                            $(".linkList").append("jogo:"+key+1 + val);
+                            $(".linkList").append(val);
                         });
                 }
             ); 
