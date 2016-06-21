@@ -253,13 +253,13 @@
             {
                 apostasJogos.forEach(function (aposta)
                 {
-                    if (jogoOficial.JogoId === aposta.JogoId && jogoOficial.JaDecorreu)
-                    {
+                    if (jogoOficial.JogoId === aposta.JogoId && jogoOficial.JaDecorreu) {
                         resultadoBoolDasApostas.push({
                             "Apostador": aposta.Apostador,
                             "JogoId": jogoOficial.JogoId,
-                            "Acertou": jogoOficial.Resultado === aposta.Resultado
-                        });
+                            "Acertou": jogoOficial.Resultado === aposta.Resultado,
+                            "AAposta": aposta.Resultado
+                    });
                     }
                 });
             });
@@ -367,14 +367,30 @@
             return resultadosFinais;
         }
 
+
+        function ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, jogoId, apostador)
+        {
+            var apostaJogoDecorrido = Enumerable.From(apostasAcertadasPorJogador).SingleOrDefault(null, "$.Apostador == '" + apostador + "' && $.JogoId == " + jogoId);
+            if (apostaJogoDecorrido == null)
+                return "";
+            var number = apostaJogoDecorrido.AAposta + " " + (apostaJogoDecorrido.Acertou ? "!" : "");
+            return number;
+        }
+
+      
         $(document).ready(function () {
 
             ObterResultadosOficiaisJogos(
                 function (resultadosOficiaisJogos)
                 {
                     // IMPROVE: Criar Apostas() , dps que cada seguinte obtem o que precisar
-                    var resultadoApostadoresJogos = CalculaResultadoApostadoresEmJogos(resultadosOficiaisJogos, ApostasJogos(), ValorJogos());
+                    var apostasJogos = ApostasJogos();
+                    var pontosPorJogo = ValorJogos();
+                    var resultadoApostadoresJogos = CalculaResultadoApostadoresEmJogos(resultadosOficiaisJogos, apostasJogos, pontosPorJogo);
                     var resultadoApostadoresEquipas = CalculaResultadoApostadoresEmEquipas(resultadosOficiaisJogos, ApostasEquipas());
+
+                    // IMPROVE: se isto for lento, não recalcular mas sim desmembrar o método CalculaResultadoApostadoresEmJogos 
+                    var apostasAcertadasPorJogador = CalculaAcertosJogos(resultadosOficiaisJogos, apostasJogos);
 
                     var pontuacaoMerged = [];
                     for (var i = 0; i < resultadoApostadoresJogos.length; i++) {
@@ -415,6 +431,90 @@
                         paging: false
                     });
 
+
+                    var apostadores = Enumerable.From(apostasAcertadasPorJogador).Select("$.Apostador").Distinct().ToArray();
+
+                    console.log(apostasAcertadasPorJogador);
+
+                    $('#acertos').DataTable({
+                        data: apostadores,
+                        columns: [
+                            {
+                                title: "Apostador",
+                                data: function (row, type, val, meta)
+                                {
+                                    return row;
+                                }
+                            },
+                            { title: "01", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 1, row); } },
+                            { title: "02", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 2, row); } },
+                            { title: "03", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 3, row); } },
+                            { title: "04", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 4, row); } },
+                            { title: "05", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 5, row); } },
+                            { title: "06", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 6, row); } },
+                            { title: "07", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 7, row); } },
+                            { title: "08", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 8, row); } },
+                            { title: "09", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 9, row); } },
+                            { title: "10", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 10, row); } },
+                            { title: "11", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 11, row); } },
+                            { title: "12", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 12, row); } },
+                            { title: "13", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 13, row); } },
+                            { title: "14", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 14, row); } },
+                            { title: "15", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 15, row); } },
+                            { title: "16", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 16, row); } },
+                            { title: "17", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 17, row); } },
+                            { title: "18", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 18, row); } },
+                            { title: "19", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 19, row); } },
+                            { title: "20", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 20, row); } },
+                            { title: "21", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 21, row); } },
+                            { title: "22", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 22, row); } },
+                            { title: "23", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 23, row); } },
+                            { title: "24", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 24, row); } },
+                            { title: "25", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 25, row); } },
+                            { title: "26", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 26, row); } },
+                            { title: "27", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 27, row); } },
+                            { title: "28", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 28, row); } },
+                            { title: "29", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 29, row); } },
+                            { title: "30", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 30, row); } },
+                            { title: "31", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 31, row); } },
+                            { title: "32", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 32, row); } },
+                            { title: "33", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 33, row); } },
+                            { title: "34", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 34, row); } },
+                            { title: "35", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 35, row); } },
+                            { title: "36", data: function (row, type, val, meta) { return ParseValorCelulaParaTabelaConfirmacaoDeApostas(apostasAcertadasPorJogador, 36, row); } }
+                        ],
+                        order: [[0, "asc"]],
+                        paging: false,
+                        "columnDefs": [
+                            {
+                                "orderable": false,
+                                "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
+                            },
+                            {
+                                "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
+                            
+                                "createdCell": function (td, cellData, rowData, row, col) {
+
+                                if (cellData == null)
+                                    return;
+
+                                if (cellData === "")
+                                    return;
+
+                                if (cellData.indexOf("!") !== -1) {
+                                    $(td).css('background-color', 'lightgreen');
+                                }
+                                
+                                else
+                                {
+                                    $(td).css('background-color', 'lightcoral');
+                                }
+                            }
+                        }]
+                        
+                    });
+
+
                     // Estatisticas
                     $("#JogosObtidos").text(Enumerable.From(resultadosOficiaisJogos).Count());
                     $("#JogosTerminados").text(Enumerable.From(resultadosOficiaisJogos).Where("$.JaDecorreu").Count());
@@ -422,7 +522,7 @@
 
                     $.each(Enumerable.From(resultadosOficiaisJogos).Select(function (x) { return "<li>" + x.Equipa1 + " VS " + x.Equipa2 + " = " + x.Resultado + "</li>" }).ToArray()
                         , function (key, val) {
-                            $(".linkList").append(val);
+                            $(".linkList").append("jogo:"+key+1 + val);
                         });
                 }
             ); 
@@ -438,6 +538,7 @@
 
 
     <table id="example" class="display" width="100%"></table>
+    <table id="acertos" class="display" width="100%"></table>
 
 
     <div>Jogos obtidos: <span id="JogosObtidos"></span></div>
